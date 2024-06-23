@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "789610511877",
+    "project_id": "fire-connect-ok",
+    "storage_bucket": "fire-connect-ok.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789610511877:android:c80d932c9046410227266c",
+        "android_client_info": {
+          "package_name": "com.example.fireconnct"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB167yyBaXie7TWXvkn9kjfKxX8oHzTvUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
