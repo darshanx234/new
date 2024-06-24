@@ -17,28 +17,37 @@ class _StartState extends State<Start> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange,
+      // backgroundColor: Colors.orange,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Let\'s go!', style: TextStyle(color: Colors.white, fontSize: 20)),
+            Text(
+              'Let\'s go!',
+            ),
             SizedBox(
               height: 15,
             ),
-            Text('Create a new group and start your expense', style: TextStyle(color: Colors.white24)),
+            Text('Create a new group and start your expense',
+                style: TextStyle(color: Color.fromARGB(255, 172, 166, 166))),
             SizedBox(
               height: 40,
             ),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => AddGroup()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => AddGroup()));
               },
-              child: Text('New Group', style: TextStyle(color: Colors.black)),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              child: Text(
+                'New Group',
+                // style:
+                // TextStyle(color: Colors.black)
               ),
-            )
+              // style: ElevatedButton.styleFrom(
+              //   backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            ),
           ],
         ),
       ),

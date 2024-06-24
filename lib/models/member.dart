@@ -17,4 +17,6 @@ class Member extends HiveObject {
     required this.name,
     required this.money,
   });
+
+  Member.copy(Member member) : this(name: member.name, money: member.money);
 }

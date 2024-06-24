@@ -177,6 +177,24 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void updateState() {
+    setState(() {
+      Future.microtask(() async {
+        Group group = await hiveService.getGroup(widget.groupName);
+        showexpense = group.expenses
+            .map((expense) => {
+                  'title': expense.name,
+                  'amount': expense.amount,
+                  'paidBy': expense.paidBy,
+                })
+            .toList();
+        name = group.members
+            .map((member) => {'name': member.name, 'money': member.money})
+            .toList();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -186,31 +204,37 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text("GROUP EXPENSE MANAGER"),
           elevation: 0,
-          backgroundColor: Colors.orange,
+          // backgroundColor: Colors.orange,
           bottom: TabBar(tabs: [
             Tab(
-                child: Text(
-              'Overview',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Text(
+                'Overview',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             )),
             Tab(
-              child: Text(
-                'Expenses',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  'Expenses',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
             )
           ]),
         ),
         floatingActionButton: SpeedDial(
-          backgroundColor: Colors.orange,
+          // backgroundColor: Colors.orange,
           animatedIcon: AnimatedIcons.menu_close,
-          overlayColor: Colors.white,
+          // overlayColor: Colors.white,
           overlayOpacity: 0.8,
           children: [
             SpeedDialChild(
               child: Icon(
                 Icons.group_add,
-                color: Colors.orange,
+                // color: Colors.orange,
               ),
               label: "New person",
               onTap: addNewPerson,
@@ -218,14 +242,14 @@ class _HomePageState extends State<HomePage> {
             SpeedDialChild(
                 child: Icon(
                   Icons.arrow_back,
-                  color: Colors.orange,
+                  // color: Colors.orange,
                 ),
                 label: "New Payment",
                 onTap: makexpayment),
             SpeedDialChild(
                 child: Icon(
                   Icons.money_off_csred_outlined,
-                  color: Colors.orange,
+                  // color: Colors.orange,
                 ),
                 label: "New expense",
                 onTap: addNewExpense)
@@ -237,6 +261,8 @@ class _HomePageState extends State<HomePage> {
               child: TabBarView(children: [
                 Overview(
                   overall: name,
+                  groupName: widget.groupName,
+                  updateState: updateState,
                 ),
                 All_expense(
                   expense: showexpense,

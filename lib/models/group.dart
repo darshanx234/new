@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'dart:collection';
 import 'package:hive/hive.dart';
 import 'package:fireconnct/models/member.dart';
 import 'package:fireconnct/models/expense.dart';
@@ -40,12 +40,48 @@ class Group extends HiveObject {
     }
   }
 
+  List<Map<String, dynamic>> generateTransactions(List<Member> mem) {
+    List<Member> payers = mem.where((m) => m.money < 0).toList();
+    List<Member> receivers = mem.where((m) => m.money > 0).toList();
+
+    payers.sort((a, b) => a.money.compareTo(b.money));
+    receivers.sort((a, b) => b.money.compareTo(a.money));
+
+    List<Map<String, dynamic>> transactions = [];
+
+    while (payers.isNotEmpty && receivers.isNotEmpty) {
+      Member payer = payers.first;
+      Member receiver = receivers.first;
+
+      double amount = min(-payer.money, receiver.money);
+
+      transactions.add({
+        'from': payer.name,
+        'to': receiver.name,
+        'money': amount,
+      });
+
+      payer.money += amount;
+      receiver.money -= amount;
+
+      if (payer.money == 0) {
+        payers.removeAt(0);
+      }
+
+      if (receiver.money == 0) {
+        receivers.removeAt(0);
+      }
+    }
+
+    return transactions;
+  }
+
   void makePayment(String from, String to, double amount) {
     var payer = members.firstWhere((member) => member.name == from);
     var payee = members.firstWhere((member) => member.name == to);
 
-    payer.money -= amount;
-    payee.money += amount;
+    payer.money += amount;
+    payee.money -= amount;
   }
 
   void deleteExpense(String expenseName) {

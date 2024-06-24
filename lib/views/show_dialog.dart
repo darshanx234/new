@@ -19,7 +19,7 @@ class _DialogBoxState extends State<DialogBox> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      // backgroundColor: Color.fromARGB(255, 255, 255, 255),
       content: Container(
         height: 125,
         child: Column(
@@ -28,22 +28,22 @@ class _DialogBoxState extends State<DialogBox> {
             TextFormField(
               controller: widget.controller,
               decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black)),
-                  hintText: "Enter Person name",
-                  labelText: "New Person",
-                  labelStyle: TextStyle(color: Colors.black)),
+                // border: OutlineInputBorder(
+                //     borderSide: BorderSide(color: Colors.black)),
+                // focusedBorder: OutlineInputBorder(
+                //     borderSide: BorderSide(color: Colors.black)),
+                hintText: "Enter Person name",
+                labelText: "New Person",
+                // labelStyle: TextStyle(color: Colors.black)
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 153, 0),
-                  )
-                  ,
+                    style: ElevatedButton.styleFrom(
+                        // backgroundColor: Color.fromARGB(255, 255, 153, 0),
+                        ),
                     onPressed: () {
                       widget.onsave();
                       print("button clicked");
@@ -52,10 +52,9 @@ class _DialogBoxState extends State<DialogBox> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 153, 0),
-                  )
-                  ,
+                      style: ElevatedButton.styleFrom(
+                          // backgroundColor: Color.fromARGB(255, 255, 153, 0),
+                          ),
                       onPressed: () {
                         widget.oncancel();
                       },
