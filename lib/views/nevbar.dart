@@ -7,6 +7,7 @@ import 'package:fireconnct/theam/theamcontroller.dart';
 import 'package:fireconnct/views/Homepage.dart';
 import 'package:fireconnct/views/loginscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:hive/hive.dart';
@@ -64,19 +65,52 @@ class _NevbarState extends State<Nevbar> {
                         ),
                       ),
                       ...group.keys.map((key) {
-                        return ListTile(
-                          leading: Icon(Icons.group),
-                          title: Text(group.get(key),
-                              style: TextStyle(color: Colors.white)),
-                          onTap: () {
-                            // Handle group tap
-                            navigator?.pushReplacement(MaterialPageRoute(
-                                builder: (BuildContext context) => HomePage(
-                                      groupName: group.get(key),
-                                    )));
-                          },
+                        return Slidable(
+                          endActionPane: ActionPane(
+                            motion: ScrollMotion(),
+                            children: [
+                              SlidableAction(
+                                onPressed: (context) async {
+                                  print('Yes tapped');
+                                  await hiveService.deleteGroup(group.get(key));
+                                  setState(() {
+                                    group.delete(key);
+                                  });
+                                  if (group.length > 0) {
+                                    navigator?.pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                HomePage(
+                                                  groupName:
+                                                      group.values.toList()[0],
+                                                )));
+                                  } else {
+                                    navigator?.pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                Start()));
+                                  }
+                                },
+                                icon: Icons.delete,
+                                backgroundColor: Colors.red,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ],
+                          ),
+                          child: ListTile(
+                            leading: Icon(Icons.group),
+                            title: Text(group.get(key),
+                                style: TextStyle(color: Colors.white)),
+                            onTap: () {
+                              // Handle group tap
+                              navigator?.pushReplacement(MaterialPageRoute(
+                                  builder: (BuildContext context) => HomePage(
+                                        groupName: group.get(key),
+                                      )));
+                            },
+                          ),
                         );
-                      }).toList(),
+                      }).toList()
                     ],
                   ),
                 ),

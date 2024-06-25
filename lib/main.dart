@@ -57,6 +57,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var groupBox = Hive.box('allgroups');
+    print(groupBox.length);
+    print(groupBox.values.toList()[0]);
     return Obx(() {
       return GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -91,9 +93,13 @@ class _MyAppState extends State<MyApp> {
                 ),
                 // Set the color of the navigation bar
               ),
-        home: groupBox.isNotEmpty
-            ? HomePage(groupName: groupBox.getAt(0))
-            : Start(),
+        home: user != null
+            ? groupBox.isNotEmpty
+                ? HomePage(
+                    groupName: groupBox.values.toList().first,
+                  )
+                : Start()
+            : HomeScreen(),
       );
     });
   }
