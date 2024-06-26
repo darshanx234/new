@@ -57,50 +57,49 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var groupBox = Hive.box('allgroups');
-    print(groupBox.length);
-    print(groupBox.values.toList()[0]);
+    // print(groupBox.length);
+    // print(groupBox.values.toList()[0]);
     return Obx(() {
       return GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: Get.find<ThemeController>().isDarkTheme.value
-            ? ThemeData.dark().copyWith(
-                appBarTheme: const AppBarTheme(
-                  iconTheme: IconThemeData(color: Colors.white),
-                  titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-                  backgroundColor: Color.fromARGB(
-                      218, 0, 0, 0), // Set the color of the AppBar
-                ),
-                bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-                  backgroundColor:
-                      Colors.black54, // Set the color of the navigation bar
-                ),
-              )
-            : ThemeData.light().copyWith(
-                appBarTheme: const AppBarTheme(
-                  iconTheme: IconThemeData(color: Colors.white),
-                  titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
-                  backgroundColor: const Color.fromARGB(
-                      218, 0, 0, 0), // Set the color of the AppBar
-                ),
-                tabBarTheme: TabBarTheme(
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.grey,
-                  indicator: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(30), // Set the border radius
-                    color: Colors.black,
+          debugShowCheckedModeBanner: false,
+          theme: Get.find<ThemeController>().isDarkTheme.value
+              ? ThemeData.dark().copyWith(
+                  appBarTheme: const AppBarTheme(
+                    iconTheme: IconThemeData(color: Colors.white),
+                    titleTextStyle:
+                        TextStyle(color: Colors.white, fontSize: 20),
+                    backgroundColor: Color.fromARGB(
+                        218, 0, 0, 0), // Set the color of the AppBar
                   ),
+                  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+                    backgroundColor:
+                        Colors.black54, // Set the color of the navigation bar
+                  ),
+                )
+              : ThemeData.light().copyWith(
+                  appBarTheme: const AppBarTheme(
+                    iconTheme: IconThemeData(color: Colors.white),
+                    titleTextStyle:
+                        TextStyle(color: Colors.white, fontSize: 20),
+                    backgroundColor: const Color.fromARGB(
+                        218, 0, 0, 0), // Set the color of the AppBar
+                  ),
+                  tabBarTheme: TabBarTheme(
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.grey,
+                    indicator: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(30), // Set the border radius
+                      color: Colors.black,
+                    ),
+                  ),
+                  // Set the color of the navigation bar
                 ),
-                // Set the color of the navigation bar
-              ),
-        home: user != null
-            ? groupBox.isNotEmpty
-                ? HomePage(
-                    groupName: groupBox.values.toList().first,
-                  )
-                : Start()
-            : HomeScreen(),
-      );
+          home: (groupBox.isEmpty == false)
+              ? HomePage(
+                  groupName: groupBox.values.toList().first,
+                )
+              : Start());
     });
   }
 }

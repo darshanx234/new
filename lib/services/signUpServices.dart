@@ -2,7 +2,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fireconnct/views/Homepage.dart';
 import 'package:fireconnct/views/loginscreen.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -19,8 +21,11 @@ signUpUser(
       'userEmail': userEmail,
       'CreatedAt': DateTime.now(),
       'userId': userid!.uid,
-    }).then((value) =>
-        {FirebaseAuth.instance.signOut(), Get.to(() => HomeScreen())});
+    }).then((value) => {
+          FirebaseAuth.instance.signOut(),
+          // navigator?.pushReplacement(
+          //     MaterialPageRoute(builder: (context) => HomeScreen()))
+        });
     print("data is stored");
   } on FirebaseAuthException catch (e) {
     // ignore: avoid_print

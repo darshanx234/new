@@ -25,23 +25,25 @@ class _HomeScreenState extends State<HomeScreen> {
   bool passwordVisible = false;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     var allgroups = Hive.box('allgroups');
-
-    initState() {
-      super.initState();
-      if (FirebaseAuth.instance.currentUser != null) {
-        if (allgroups.getAt(0) != null) {
-          navigator?.pushReplacement(MaterialPageRoute(
-              builder: (context) => HomePage(
-                    groupName: allgroups.getAt(0),
-                  )));
-        } else {
-          navigator?.pushReplacement(
-              MaterialPageRoute(builder: (context) => Start()));
-        }
+    super.initState();
+    if (FirebaseAuth.instance.currentUser != null) {
+      if (allgroups.getAt(0) != null) {
+        navigator?.pushReplacement(MaterialPageRoute(
+            builder: (context) => HomePage(
+                  groupName: allgroups.getAt(0),
+                )));
+      } else {
+        navigator
+            ?.pushReplacement(MaterialPageRoute(builder: (context) => Start()));
       }
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var allgroups = Hive.box('allgroups');
 
     return Scaffold(
         appBar: AppBar(
@@ -109,13 +111,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                     email: loginEmail, password: loginPassword))
                             .user;
                         if (firebaseUser != null) {
-                          if (allgroups.getAt(0) != null) {
-                            navigator?.pushReplacement(MaterialPageRoute(
+                          print(firebaseUser.uid);
+                          if (allgroups.values.toList().first != null) {
+                            print('Homescreen');
+                            navigator!.push(MaterialPageRoute(
                                 builder: (context) => HomePage(
-                                      groupName: allgroups.getAt(0),
+                                      groupName:
+                                          allgroups.values.toList().first,
                                     )));
                           } else {
-                            navigator?.pushReplacement(MaterialPageRoute(
+                            print("start");
+                            navigator!.pushReplacement(MaterialPageRoute(
                                 builder: (context) => Start()));
                           }
                         } else {
@@ -158,7 +164,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => SignUpScreen());
+                    navigator?.pushReplacement(MaterialPageRoute(
+                        builder: (context) => SignUpScreen()));
                   },
                   child: Container(
                       child: Card(
