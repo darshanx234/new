@@ -29,6 +29,6 @@ signUpUser(
     print("data is stored");
   } on FirebaseAuthException catch (e) {
     // ignore: avoid_print
-    print("Error $e");
+    // print("Error $e");
   }
 }

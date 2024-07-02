@@ -26,7 +26,7 @@ class _AddExpenseState extends State<AddExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   late String selectedMember;
- HiveDatabaseService hiveService = HiveDatabaseService();
+  HiveDatabaseService hiveService = HiveDatabaseService();
 
   @override
   void initState() {
@@ -46,17 +46,15 @@ class _AddExpenseState extends State<AddExpense> {
               // Save button onPressed logic
               Group group = await hiveService.getGroup(widget.groupName);
 
+              group.addExpense(
+                Expense(
+                  name: _titleController.text,
+                  amount: double.parse(_amountController.text),
+                  paidBy: selectedMember,
+                ),
+              );
 
-                group.addExpense(
-                  Expense(
-                    name: _titleController.text,
-                    amount: double.parse(_amountController.text),
-                    paidBy: selectedMember,
-                  ),
-                );
-
-                await hiveService.updateGroup(widget.groupName, group);
-              
+              await hiveService.updateGroup(widget.groupName, group);
 
               widget.onSave();
             },
@@ -110,7 +108,8 @@ class _AddExpenseState extends State<AddExpense> {
                         });
                       }
                     },
-                    items: widget.members.map<DropdownMenuItem<String>>((String value) {
+                    items: widget.members
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),

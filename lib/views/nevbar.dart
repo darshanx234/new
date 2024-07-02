@@ -5,6 +5,7 @@ import 'package:fireconnct/index.dart';
 import 'package:fireconnct/services/hive_database_service.dart';
 import 'package:fireconnct/theam/theamcontroller.dart';
 import 'package:fireconnct/views/Homepage.dart';
+import 'package:fireconnct/views/addgroup.dart';
 import 'package:fireconnct/views/loginscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -157,7 +158,7 @@ class _NevbarState extends State<Nevbar> {
           child: FloatingActionButton(
             onPressed: () {
               navigator?.pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) => Start()));
+                  builder: (BuildContext context) => AddGroup()));
             },
             child: Icon(Icons.add),
           ),

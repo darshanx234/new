@@ -26,18 +26,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    var allgroups = Hive.box('allgroups');
     super.initState();
-    if (FirebaseAuth.instance.currentUser != null) {
-      if (allgroups.getAt(0) != null) {
-        navigator?.pushReplacement(MaterialPageRoute(
-            builder: (context) => HomePage(
-                  groupName: allgroups.getAt(0),
-                )));
-      } else {
-        navigator
-            ?.pushReplacement(MaterialPageRoute(builder: (context) => Start()));
-      }
+    var allgroups = Hive.box('allgroups');
+    if (allgroups.isNotEmpty == true &&
+        FirebaseAuth.instance.currentUser != null) {
+      navigator?.pushReplacement(MaterialPageRoute(
+          builder: (context) => HomePage(
+                groupName: allgroups.getAt(0),
+              )));
     }
   }
 
@@ -111,19 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     email: loginEmail, password: loginPassword))
                             .user;
                         if (firebaseUser != null) {
-                          print(firebaseUser.uid);
-                          if (allgroups.values.toList().first != null) {
-                            print('Homescreen');
-                            navigator!.push(MaterialPageRoute(
-                                builder: (context) => HomePage(
-                                      groupName:
-                                          allgroups.values.toList().first,
-                                    )));
-                          } else {
-                            print("start");
-                            navigator!.pushReplacement(MaterialPageRoute(
-                                builder: (context) => Start()));
-                          }
+                          navigator?.pushReplacement(
+                              MaterialPageRoute(builder: (context) => Start()));
                         } else {
                           final snackBar = SnackBar(
                             content: Text('Check email and password'),
@@ -164,8 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    navigator?.pushReplacement(MaterialPageRoute(
-                        builder: (context) => SignUpScreen()));
+                    Get.to(() => SignUpScreen());
                   },
                   child: Container(
                       child: Card(
